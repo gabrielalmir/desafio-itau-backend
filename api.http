@@ -1,0 +1,17 @@
+### Add Transaction
+
+POST http://localhost:8080/transacao
+Content-Type: application/json
+
+{
+    "valor": 100.0,
+    "dataHora": "2025-02-08T21:07:34.011Z"
+}
+
+### Clear Transactions
+
+DELETE http://localhost:8080/transacao
+
+### Get Statistics (com intervalo)
+
+GET http://localhost:8080/estatistica?intervaloBusca=600
