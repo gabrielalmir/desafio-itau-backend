@@ -1,0 +1,70 @@
+basePath: /
+definitions:
+  dtos.StatisticsResponse:
+    properties:
+      avg:
+        type: number
+      count:
+        type: integer
+      max:
+        type: number
+      min:
+        type: number
+      sum:
+        type: number
+    type: object
+  dtos.TransactionRequest:
+    properties:
+      dataHora:
+        type: string
+      valor:
+        type: number
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API para gerenciamento de transações e estatísticas.
+  title: Desafio Itau Backend API
+  version: "1.0"
+paths:
+  /estatistica:
+    get:
+      description: Obtém estatísticas das transações dos últimos 60 segundos
+      parameters:
+      - description: Intervalo de busca em segundos
+        in: query
+        name: intervaloBusca
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.StatisticsResponse'
+      summary: Retorna estatísticas das transações
+  /transacao:
+    delete:
+      description: Apaga todas as transações armazenadas
+      responses:
+        "200":
+          description: ""
+      summary: Remove todas as transações
+    post:
+      consumes:
+      - application/json
+      description: Registra uma transação, validando os critérios necessários
+      parameters:
+      - description: Dados da transação
+        in: body
+        name: transaction
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.TransactionRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: ""
+      summary: Cria uma nova transação
+swagger: "2.0"
