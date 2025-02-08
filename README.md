@@ -1,6 +1,6 @@
 # Desafio Itaú Backend
 
-Este projeto é uma API para gerenciamento de transações e estatísticas, desenvolvida em Go.
+Este projeto é uma API para gerenciamento de transações e estatísticas, desenvolvida em Go. O desafio foi retirado do repositório [rafaellins-itau/desafio-itau-vaga-99-junior](https://github.com/rafaellins-itau/desafio-itau-vaga-99-junior).
 
 ## Estrutura do Projeto
 
