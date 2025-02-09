@@ -57,6 +57,22 @@ Este projeto é uma API para gerenciamento de transações e estatísticas, dese
 - `DELETE /transacao`: Remove todas as transações.
 - `GET /estatistica`: Retorna estatísticas das transações.
 
+## Testes
+
+Os testes estão localizados no diretório `services/` e podem ser executados com o seguinte comando:
+
+```sh
+go test -v ./...
+```
+
+Os testes cobrem as seguintes funcionalidades:
+
+- `TestGetStatistics`: Verifica se as estatísticas das transações estão corretas.
+- `TestCreateTransaction`: Verifica se uma transação é criada corretamente.
+- `TestDeleteTransactions`: Verifica se todas as transações são removidas corretamente.
+- `TestValidateTransaction`: Verifica se a validação das transações está correta.
+- `TestParseSearchInterval`: Verifica se o intervalo de busca é analisado corretamente.
+
 ## Documentação da API
 
 A documentação da API está disponível em `http://localhost:8080/swagger/index.html`.
