@@ -22,7 +22,7 @@ func GetStatistics(searchInterval int) dtos.StatisticsResponse {
 	logger.Printf("Current location: %s\n", time.Now().Location())
 
 	for _, t := range transactions {
-		parsedTime, _ := time.Parse(time.RFC3339, t.DataHora)
+		parsedTime, _ := time.Parse(time.RFC3339, t.CreatedAt)
 		logger.Printf("Comparing %s with %s\n", parsedTime, cutoffTime)
 
 		if parsedTime.After(cutoffTime) {
@@ -36,16 +36,16 @@ func GetStatistics(searchInterval int) dtos.StatisticsResponse {
 	}
 
 	sum := 0.0
-	min := filtered[0].Valor
-	max := filtered[0].Valor
+	min := filtered[0].TransactionValue
+	max := filtered[0].TransactionValue
 
 	for _, t := range filtered {
-		sum += t.Valor
-		if t.Valor < min {
-			min = t.Valor
+		sum += t.TransactionValue
+		if t.TransactionValue < min {
+			min = t.TransactionValue
 		}
-		if t.Valor > max {
-			max = t.Valor
+		if t.TransactionValue > max {
+			max = t.TransactionValue
 		}
 	}
 
@@ -70,7 +70,7 @@ func DeleteTransactions() {
 
 func ValidateTransaction(t dtos.TransactionRequest) error {
 	logger.Printf("Validating transaction: %+v\n", t)
-	parsedTime, err := time.Parse(time.RFC3339, t.DataHora)
+	parsedTime, err := time.Parse(time.RFC3339, t.CreatedAt)
 
 	if err != nil {
 		return errors.New("dataHora inválida")
@@ -80,7 +80,7 @@ func ValidateTransaction(t dtos.TransactionRequest) error {
 		return errors.New("dataHora não pode ser no futuro")
 	}
 
-	if t.Valor <= 0 {
+	if t.TransactionValue <= 0 {
 		return errors.New("valor inválido")
 	}
 

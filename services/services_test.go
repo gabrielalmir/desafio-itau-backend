@@ -12,9 +12,9 @@ func TestGetStatistics(t *testing.T) {
 	services.DeleteTransactions()
 
 	transactions := []dtos.TransactionRequest{
-		{DataHora: time.Now().Add(-10 * time.Second).Format(time.RFC3339), Valor: 100.0},
-		{DataHora: time.Now().Add(-20 * time.Second).Format(time.RFC3339), Valor: 200.0},
-		{DataHora: time.Now().Add(-30 * time.Second).Format(time.RFC3339), Valor: 300.0},
+		{CreatedAt: time.Now().Add(-10 * time.Second).Format(time.RFC3339), TransactionValue: 100.0},
+		{CreatedAt: time.Now().Add(-20 * time.Second).Format(time.RFC3339), TransactionValue: 200.0},
+		{CreatedAt: time.Now().Add(-30 * time.Second).Format(time.RFC3339), TransactionValue: 300.0},
 	}
 
 	for _, tr := range transactions {
@@ -43,8 +43,8 @@ func TestCreateTransaction(t *testing.T) {
 	services.DeleteTransactions()
 
 	transaction := dtos.TransactionRequest{
-		DataHora: time.Now().Format(time.RFC3339),
-		Valor:    150.0,
+		CreatedAt:        time.Now().Format(time.RFC3339),
+		TransactionValue: 150.0,
 	}
 
 	services.CreateTransaction(transaction)
@@ -71,8 +71,8 @@ func TestDeleteTransactions(t *testing.T) {
 	services.DeleteTransactions()
 
 	transaction := dtos.TransactionRequest{
-		DataHora: time.Now().Format(time.RFC3339),
-		Valor:    150.0,
+		CreatedAt:        time.Now().Format(time.RFC3339),
+		TransactionValue: 150.0,
 	}
 
 	services.CreateTransaction(transaction)
@@ -86,8 +86,8 @@ func TestDeleteTransactions(t *testing.T) {
 
 func TestValidateTransaction(t *testing.T) {
 	validTransaction := dtos.TransactionRequest{
-		DataHora: time.Now().Format(time.RFC3339),
-		Valor:    100.0,
+		CreatedAt:        time.Now().Format(time.RFC3339),
+		TransactionValue: 100.0,
 	}
 
 	err := services.ValidateTransaction(validTransaction)
@@ -96,8 +96,8 @@ func TestValidateTransaction(t *testing.T) {
 	}
 
 	invalidTransaction := dtos.TransactionRequest{
-		DataHora: time.Now().Add(10 * time.Second).Format(time.RFC3339),
-		Valor:    100.0,
+		CreatedAt:        time.Now().Add(10 * time.Second).Format(time.RFC3339),
+		TransactionValue: 100.0,
 	}
 
 	err = services.ValidateTransaction(invalidTransaction)
@@ -106,8 +106,8 @@ func TestValidateTransaction(t *testing.T) {
 	}
 
 	invalidTransaction = dtos.TransactionRequest{
-		DataHora: time.Now().Format(time.RFC3339),
-		Valor:    -100.0,
+		CreatedAt:        time.Now().Format(time.RFC3339),
+		TransactionValue: -100.0,
 	}
 
 	err = services.ValidateTransaction(invalidTransaction)

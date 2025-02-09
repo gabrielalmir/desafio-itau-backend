@@ -1,8 +1,8 @@
 package dtos
 
 type TransactionRequest struct {
-	Valor    float64 `json:"valor"`
-	DataHora string  `json:"dataHora"`
+	TransactionValue float64 `json:"valor"`
+	CreatedAt        string  `json:"dataHora"`
 }
 
 type StatisticsResponse struct {
