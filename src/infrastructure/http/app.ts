@@ -10,6 +10,7 @@ import {
 } from "../../domain/services/transaction-validation-service";
 import { getConfig } from "../../config/env";
 import { PrismaTransactionRepository } from "../database/prisma/repositories/prisma-transaction-repository";
+import { openApiDocument, scalarHtml } from "./docs/openapi";
 import { ensureBearerToken, UnauthorizedError } from "./middlewares/auth-middleware";
 
 const config = getConfig();
@@ -28,6 +29,15 @@ function response(status: number, data?: unknown): Response {
   return Response.json(data, { status });
 }
 
+function htmlResponse(status: number, html: string): Response {
+  return new Response(html, {
+    status,
+    headers: {
+      "content-type": "text/html; charset=utf-8"
+    }
+  });
+}
+
 async function parseJson<T>(request: Request): Promise<T | null> {
   try {
     return (await request.json()) as T;
@@ -38,9 +48,17 @@ async function parseJson<T>(request: Request): Promise<T | null> {
 
 export async function app(request: Request): Promise<Response> {
   try {
-    ensureBearerToken(request.headers.get("authorization"), config.apiSecret);
-
     const url = new URL(request.url);
+
+    if (request.method === "GET" && url.pathname === "/openapi.json") {
+      return response(200, openApiDocument);
+    }
+
+    if (request.method === "GET" && (url.pathname === "/docs" || url.pathname === "/docs/")) {
+      return htmlResponse(200, scalarHtml);
+    }
+
+    ensureBearerToken(request.headers.get("authorization"), config.apiSecret);
 
     if (request.method === "POST" && url.pathname === "/transacao") {
       const body = await parseJson<{ valor: number; dataHora: string }>(request);

@@ -22,3 +22,9 @@ Authorization: Bearer {{secret}}
 ### Health
 GET {{baseUrl}}/health
 Authorization: Bearer {{secret}}
+
+### OpenAPI JSON
+GET {{baseUrl}}/openapi.json
+
+### Scalar UI
+GET {{baseUrl}}/docs

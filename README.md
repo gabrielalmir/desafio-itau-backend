@@ -27,12 +27,16 @@ A estrutura segue separação por camadas:
 - `DELETE /transacao`
 - `GET /estatistica?intervaloBusca=60`
 - `GET /health`
+- `GET /openapi.json` (documentacao OpenAPI)
+- `GET /docs` (UI Scalar)
 
 Todos exigem header:
 
 ```http
 Authorization: Bearer <API_SECRET>
 ```
+
+Excecao: `GET /openapi.json` e `GET /docs` nao exigem autenticacao.
 
 ## Variáveis de ambiente
 
