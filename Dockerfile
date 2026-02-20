@@ -1,45 +1,18 @@
 # syntax=docker/dockerfile:1
 
-# Etapa 1: Resolver dependências
-FROM golang:1.23-alpine AS dependencies
-
+FROM oven/bun:1 AS base
 WORKDIR /app
 
-# Copia os arquivos do projeto
-COPY go.mod go.sum ./
-RUN go mod download
+COPY package.json bun.lock* ./
+RUN bun install
 
-################################################################################
+COPY prisma ./prisma
+COPY prisma.config.ts ./
+RUN bunx prisma generate
 
-# Etapa 2: Construir o aplicativo
-FROM dependencies AS build
-
-WORKDIR /app
-
-COPY . .
-
-RUN go build -o app ./main.go
-
-################################################################################
-
-# Etapa 3: Ambiente de Produção
-FROM alpine:latest AS production
-
-WORKDIR /app
-
-ARG UID=10001
-RUN adduser \
-    --disabled-password \
-    --gecos "" \
-    --home "/nonexistent" \
-    --shell "/sbin/nologin" \
-    --no-create-home \
-    --uid "${UID}" \
-    appuser
-USER appuser
-
-COPY --from=build /app/app .
+COPY tsconfig.json .
+COPY src ./src
 
 EXPOSE 8080
 
-ENTRYPOINT [ "/app/app" ]
+CMD ["sh", "-c", "bunx prisma db push && bun run start"]

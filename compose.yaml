@@ -1,6 +1,19 @@
 services:
-  server:
+  api:
     build:
       context: .
     ports:
-      - 8080:8080
+      - "8080:8080"
+    environment:
+      HOST: "0.0.0.0"
+      PORT: "8080"
+      DATABASE_URL: "file:/app/data/dev.db"
+      API_SECRET: "troque-este-secret"
+      HTTPS_ENABLED: "false"
+      HTTPS_CERT_PATH: ""
+      HTTPS_KEY_PATH: ""
+    volumes:
+      - sqlite_data:/app/data
+
+volumes:
+  sqlite_data:

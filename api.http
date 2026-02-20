@@ -1,17 +1,24 @@
-### Add Transaction
+@baseUrl = http://localhost:8080
+@secret = troque-este-secret
 
-POST http://localhost:8080/transacao
+### Add Transaction
+POST {{baseUrl}}/transacao
+Authorization: Bearer {{secret}}
 Content-Type: application/json
 
 {
-    "valor": 100.0,
-    "dataHora": "2025-02-08T21:07:34.011Z"
+  "valor": 100.0,
+  "dataHora": "2026-02-19T21:07:34.011Z"
 }
 
 ### Clear Transactions
-
-DELETE http://localhost:8080/transacao
+DELETE {{baseUrl}}/transacao
+Authorization: Bearer {{secret}}
 
 ### Get Statistics (com intervalo)
+GET {{baseUrl}}/estatistica?intervaloBusca=600
+Authorization: Bearer {{secret}}
 
-GET http://localhost:8080/estatistica?intervaloBusca=600
+### Health
+GET {{baseUrl}}/health
+Authorization: Bearer {{secret}}

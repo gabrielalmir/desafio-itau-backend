@@ -1,0 +1,16 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Transaction {
+  id        Int      @id @default(autoincrement())
+  amount    Float
+  createdAt DateTime @map("created_at")
+
+  @@index([createdAt])
+  @@map("transactions")
+}
